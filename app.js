@@ -9,6 +9,11 @@ const timeEl = document.querySelector('#time');
 const spinner = document.querySelector('#spinner-container');
 const results = document.querySelector('#results');
 
+const formatNumber = new Intl.NumberFormat(undefined, {
+  style: 'currency',
+  currency: 'USD',
+});
+
 // Show result
 const showResult = () => {
   spinner.style.display = 'none';
@@ -51,11 +56,11 @@ const calculateLoan = () => {
   const loanInterest = total - principal;
 
   if (isFinite(monthly)) {
-    totalPayment.textContent = `$${total.toFixed(2)}`;
-    monthlyPayment.innerHTML = `<div><span class="small-dollar">&dollar;</span> <span>${monthly.toFixed(
-      2
-    )}</span> </div>`;
-    totalInterest.textContent = `$${loanInterest.toFixed(2)}`;
+    totalPayment.textContent = `${formatNumber.format(total.toFixed(2))}`;
+    monthlyPayment.textContent = `${formatNumber.format(monthly.toFixed(2))}`;
+    totalInterest.textContent = `${formatNumber.format(
+      loanInterest.toFixed(2)
+    )}`;
     // Show result
     showResult();
   } else {
