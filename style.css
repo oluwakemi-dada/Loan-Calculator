@@ -145,6 +145,7 @@ button {
 #results > *:nth-child(2) > p,
 #results > *:nth-child(3) p {
   color: #b6b6b9;
+  font-size: 1.4rem;
 }
 
 .total-payment,
