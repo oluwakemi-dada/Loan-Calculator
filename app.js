@@ -1,79 +1,78 @@
-// Listen for submit
-document.getElementById("loan-form").addEventListener("submit", function (e) {
-  // Hide Results
-  document.querySelector("#results").style.display = "none";
+const loanForm = document.querySelector('.loan-form');
+const loanAmount = document.querySelector('.loan-amount');
+const interestRate = document.querySelector('.interest-rate');
+const period = document.querySelector('.period');
+const monthlyPayment = document.querySelector('.monthly-payment');
+const totalPayment = document.querySelector('.total-payment');
+const totalInterest = document.querySelector('.total-interest');
+const timeEl = document.querySelector('#time');
+const spinner = document.querySelector('#spinner-container');
+const results = document.querySelector('#results');
 
-  // Show Loader
-  document.querySelector("#loading").style.display = "block";
+// Show result
+const showResult = () => {
+  spinner.style.display = 'none';
+  results.style.display = 'block';
+};
 
-  setTimeout(calculateResults, 2000);
+// Show message
+const showMessage = (message) => {
+  const loan = document.querySelector('.loan');
+  spinner.style.display = 'none';
+  const loanHeading = document.querySelector('.loan-heading');
+  const div = document.createElement('div');
+  div.className = 'error';
+  div.textContent = message;
 
-  e.preventDefault();
-});
+  loan.insertBefore(div, loanHeading);
+  // Remove message
+  removeMesssage();
+};
 
-// Calculate Results
-function calculateResults() {
-  // UI Variables
-  const amount = document.getElementById("amount");
-  const interest = document.getElementById("interest");
-  const years = document.getElementById("years");
-  const monthlyPayment = document.getElementById("monthly-payment");
-  const totalPayment = document.getElementById("total-payment");
-  const totalInterest = document.getElementById("total-interest");
+// Remove message
+const removeMesssage = () => {
+  setTimeout(() => {
+    document.querySelector('.error').remove();
+  }, 3000);
+};
 
-  // Input Values
-  const principal = parseFloat(amount.value);
-  const calculatedInterest = parseFloat(interest.value) / 100 / 12;
-  const calculatedPayments = parseFloat(years.value) * 12;
+// Calculate loan
+const calculateLoan = () => {
+  // Input values
+  const time = parseFloat(timeEl.value);
+  const principal = parseFloat(loanAmount.value);
+  const interest = parseFloat(interestRate.value) / 100 / 12;
+  const duration = parseFloat(period.value * time);
 
-  // Compute monthly payment
-  const x = Math.pow(1 + calculatedInterest, calculatedPayments);
-  const monthly = (principal * x * calculatedInterest) / (x - 1);
+  // Compute payment
+  const x = 1 / (1 + interest) ** duration;
+  const monthly = (interest * principal) / (1 - x);
+  const total = monthly * duration;
+  const loanInterest = total - principal;
 
   if (isFinite(monthly)) {
-    monthlyPayment.value = monthly.toFixed(2);
-    totalPayment.value = (monthly * calculatedPayments).toFixed(2);
-    totalInterest.value = (monthly * calculatedPayments - principal).toFixed(2);
-
-    // Show Results
-    document.querySelector("#results").style.display = "block";
-
-    // Hide Loader
-    document.querySelector("#loading").style.display = "none";
+    totalPayment.textContent = `$${total.toFixed(2)}`;
+    monthlyPayment.innerHTML = `<div><span class="small-dollar">&dollar;</span> <span>${monthly.toFixed(
+      2
+    )}</span> </div>`;
+    totalInterest.textContent = `$${loanInterest.toFixed(2)}`;
+    // Show result
+    showResult();
   } else {
-    showError("Please check your numbers");
+    // Show error message
+    showMessage('Please check your inputs');
   }
-}
+};
 
-// Show Error
-function showError(error) {
-  // Hide Results
-  document.querySelector("#results").style.display = "none";
-
-  // Show Loader
-  document.querySelector("#loading").style.display = "none";
-
-  // Create a div
-  const errorDiv = document.createElement("div");
-
-  // Get elements
-  const card = document.querySelector(".card");
-  const heading = document.querySelector(".heading");
-
-  // Add class
-  errorDiv.className = "alert alert-danger";
-
-  // Create text node amd append to div
-  errorDiv.appendChild(document.createTextNode(error));
-
-  // Insert error above heading
-  card.insertBefore(errorDiv, heading);
-
-  // Clear error after 3 seconds
-  setTimeout(clearError, 3000);
-}
-
-// Clear error
-function clearError() {
-  document.querySelector(".alert").remove();
-}
+// Submit
+loanForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // Hide result
+  results.style.display = 'none';
+  // Show spinner
+  spinner.style.display = 'flex';
+  // Remove spinner & calculate loan
+  setTimeout(() => {
+    calculateLoan();
+  }, 2000);
+});
