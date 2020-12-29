@@ -72,7 +72,7 @@ body {
 .form-input:nth-child(2) label,
 .form-input select {
   background-color: var(--light-grey-color);
-  width: 37%;
+  width: 25%;
 }
 
 button {
@@ -192,6 +192,12 @@ button {
 @media (max-width: 768px) {
   .container {
     width: 70%;
+  }
+
+  .form-input:first-child label,
+  .form-input:nth-child(2) label,
+  .form-input select {
+    width: 37%;
   }
 }
 
