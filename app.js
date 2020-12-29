@@ -9,7 +9,7 @@ const timeEl = document.querySelector('#time');
 const spinner = document.querySelector('#spinner-container');
 const results = document.querySelector('#results');
 
-const formatNumber = new Intl.NumberFormat(undefined, {
+const formatNumber = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
