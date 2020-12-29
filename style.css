@@ -209,4 +209,8 @@ button {
   .loan {
     padding: 1rem 1.5rem;
   }
+
+  #results {
+    padding: 3% 5%;
+  }
 }
