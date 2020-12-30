@@ -118,6 +118,18 @@ button {
   border-bottom: 3px solid var(--yellow-color);
 }
 
+/* .monthly-payment div {
+  display: flex;
+}
+
+.monthly-payment div .small-dollar {
+  font-size: 2.7rem;
+  margin-right: 0.2rem;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  padding-right: 0.2rem;
+} */
+
 #results > *:nth-child(2),
 #results > *:nth-child(3) {
   display: flex;

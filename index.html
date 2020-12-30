@@ -12,7 +12,12 @@
         <h1 class="loan-heading">Loan Calculator</h1>
         <form class="loan-form">
           <div class="form-input">
-            <label for="amount">&dollar;</label>
+            <select name="currency" id="currency">
+              <option value="₦">₦</option>
+              <option value="£">£</option>
+              <option value="$">$</option>
+            </select>
+
             <input class="loan-amount" type="text" placeholder="Loan Amount" />
           </div>
           <div class="form-input">

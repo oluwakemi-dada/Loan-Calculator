@@ -8,11 +8,7 @@ const totalInterest = document.querySelector('.total-interest');
 const timeEl = document.querySelector('#time');
 const spinner = document.querySelector('#spinner-container');
 const results = document.querySelector('#results');
-
-const formatNumber = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+const currency = document.querySelector('#currency');
 
 // Show result
 const showResult = () => {
@@ -56,11 +52,17 @@ const calculateLoan = () => {
   const loanInterest = total - principal;
 
   if (isFinite(monthly)) {
-    totalPayment.textContent = `${formatNumber.format(total.toFixed(2))}`;
-    monthlyPayment.textContent = `${formatNumber.format(monthly.toFixed(2))}`;
-    totalInterest.textContent = `${formatNumber.format(
-      loanInterest.toFixed(2)
-    )}`;
+    totalPayment.textContent = `${currency.value}${total
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+    monthlyPayment.textContent = `${currency.value}${monthly
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+    totalInterest.textContent = `${currency.value}${loanInterest
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
     // Show result
     showResult();
   } else {
