@@ -66,8 +66,12 @@ const calculateLoan = () => {
     // Show result
     showResult();
   } else {
-    // Show error message
-    showMessage('Please check your inputs');
+    if (!document.querySelector('.error')) {
+      // Show error message
+      showMessage('Please check your inputs');
+    } else {
+      //  DO NOTHING
+    }
   }
 };
 
